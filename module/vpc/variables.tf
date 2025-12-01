@@ -1,0 +1,8 @@
+variable "" {
+    description = "value"
+    
+}
+
+variable "" {
+  
+}
