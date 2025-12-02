@@ -23,3 +23,6 @@ override.tf.json
 # Provider lock file (unless intentionally tracking for cross-platform checksums)
 # .terraform.lock.hcl
 ThamKhaoTerraform
+*.csv
+*.pem
+.terraform.lock.hcl
