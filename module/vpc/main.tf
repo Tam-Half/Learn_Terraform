@@ -2,12 +2,10 @@
     # Create VPC
     resource "aws_vpc" "main" {
         cidr_block = "10.0.0.0/16"
-        
         tags={
             Name = var.aws_name_vpc
         }
     }
-
     # Create Public Subnet 
     resource "aws_subnet" "public_1a" {
         vpc_id = aws_vpc.main.id
@@ -116,3 +114,9 @@
         destination_cidr_block = "0.0.0.0/0"
         gateway_id = aws_internet_gateway.gw.id
     }
+
+    # Create aws_vpc_endpoint_subnet_association
+    # resource "aws_vpc_endpoint_subnet_association" "sn_ec2" {
+    #     vpc_endpoint_id = aws_vpc.main.id 
+    #     subnet_id = aws_subnet.public_1a.id
+    # }
