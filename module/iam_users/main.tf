@@ -40,7 +40,7 @@ EOT
 }
 
 # User Bacsic EC2
-resource "aws_iam_user" "user_bacsic" {
+resource "aws_iam_user" "user_devops_01" {
     name = "devops_user_internship_lpc_01"
     path = "/devops/"
     tags = {
@@ -58,7 +58,7 @@ resource "aws_iam_user" "user_bacsic" {
 
 resource "aws_iam_group_policy" "my_devops_policy" {
     name = "policy_for_devops"
-    group =  aws_iam_user.user_bacsic.name 
+    group =  aws_iam_user.user_devops_01.name 
 
     policy = jsonencode({
         Version =  "2012-10-17"
@@ -83,15 +83,15 @@ resource "aws_iam_group_policy" "my_devops_policy" {
     })
 }
 
-resource "aws_iam_user_login_profile" "user_developer" {
-    user = aws_iam_user.user_bacsic.name
+resource "aws_iam_user_login_profile" "user_devops01" {
+    user = aws_iam_user.user_devops_01.name
     pgp_key = "keybase:tamhalf"
 }
 
 resource "local_file" "private_info_user_devops" {
     content = <<-EOT
 User Name,Password
-${aws_iam_user.user_bacsic.name},${aws_iam_user_login_profile.user_developer.encrypted_password}
+${aws_iam_user.user_devops_01.name},${aws_iam_user_login_profile.user_devops01.encrypted_password}
 EOT
     filename = "${path.module}/user_devops_01.csv"
 }
