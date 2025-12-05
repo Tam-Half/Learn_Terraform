@@ -36,3 +36,16 @@ variable "allowed_ssh_ips" {
     # curl ifconfig.me
     default = []
 }
+
+variable "instance_profile" {
+    description = "Role arn for woker node eks"
+    type = string
+}
+
+variable "aws_eks_cluster" {
+    description = "Name EKS Cluster connect EC2 bootstrap"
+    type = string
+}
+
+variable "aws_eks_cluster_endponit" {}
+variable "aws_eks_cluster_auth" {}

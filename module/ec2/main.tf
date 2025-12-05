@@ -1,41 +1,26 @@
+resource "aws_instance" "node_woker" {
 
-resource "aws_instance" "app_server" {
-  ami        = var.aws_ami_id
+  count = 2 
+  ami  = var.aws_ami_id
   instance_type = var.aws_instance_type
   associate_public_ip_address = true
   key_name = var.key_name
-  subnet_id = var.public_subnet[0]
+  subnet_id = var.public_subnet[count.index]
 
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
+  # add role eks_woker_node
+  iam_instance_profile = var.instance_profile
+   
+user_data = <<-EOF
+#!/bin/bash
+/etc/eks/bootstrap.sh ${var.aws_eks_cluster} \
+  --apiserver-endpoint "${var.aws_eks_cluster_endponit}" \
+  --b64-cluster-ca "${var.aws_eks_cluster_auth}"
+EOF
+
   tags = {
-    Name = var.aws_instance_name
+    Name = "${var.aws_instance_name}-${count.index}"
   }
 }
-
-resource "aws_security_group" "ec2_sg" {
-  name = "ec2-ssh-sg"
-  description = "Allow SSH inbound traffic"
-  vpc_id = var.vpc_id
-
-  #
-  ingress {
-    description = "SSH from my IP"
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = var.allowed_ssh_ips
-  }
-
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "ec2-ssh-security-group"
-  }
   
-}

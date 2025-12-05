@@ -1,7 +1,7 @@
-variable "aws_region" {
-    description = "AWS region to deploy"
-    type = string
-}
+# variable "aws_region" {
+#     description = "AWS region to deploy"
+#     type = string
+# }
 
 # variable "instance_type" {
 #   description = "EC2 instance type"

@@ -40,12 +40,9 @@ EOT
 }
 
 # User Bacsic EC2
-resource "aws_iam_user" "user_devops_01" {
-    name = "devops_user_internship_lpc_01"
-    path = "/devops/"
-    tags = {
-        department = "devops"
-    }
+resource "aws_iam_group" "devops_group" {
+  name = "devops_group_internship"
+  path = "/devops/"
 }
 
 # resource "aws_iam_policy_attachment" "user_basic" {
@@ -56,32 +53,49 @@ resource "aws_iam_user" "user_devops_01" {
 #     policy_arn = ""
 # }
 
-resource "aws_iam_group_policy" "my_devops_policy" {
-    name = "policy_for_devops"
-    group =  aws_iam_user.user_devops_01.name 
-
-    policy = jsonencode({
-        Version =  "2012-10-17"
-        Statement = [
-            {
-                Effect = "Allow"
-                Action = ["ec2:Describe*"]
-                Resource = "*"
-            },
-            {
-                Effect = "Deny"
-                Action = [
-                "ec2:RunInstances",
-                "ec2:TerminateInstances",
-                "ec2:StopInstances",
-                "ec2:RebootInstances",
-                "ec2:Delete*"
-               ]
-                Resource =  "*"
-            }
-        ] 
-    })
+resource "aws_iam_user" "user_devops_01" {
+    name = "devops_user_internship_lpc_01"
+    path = "/devops/"
+    tags = {
+        department = "devops"
+    }
 }
+
+
+resource "aws_iam_group_policy" "my_devops_policy" {
+  name  = "policy_for_devops"
+  group = aws_iam_group.devops_group.name
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = ["ec2:Describe*"]
+        Resource = "*"
+      },
+      {
+        Effect = "Deny"
+        Action = [
+          "ec2:RunInstances",
+          "ec2:TerminateInstances",
+          "ec2:StopInstances",
+          "ec2:RebootInstances",
+          "ec2:Delete*"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+resource "aws_iam_group_membership" "devops_membership" {
+  name = "devops_membership"
+  group = aws_iam_group.devops_group.name
+  users = [aws_iam_user.user_devops_01.name]
+}
+
+
+
 
 resource "aws_iam_user_login_profile" "user_devops01" {
     user = aws_iam_user.user_devops_01.name
@@ -95,3 +109,4 @@ ${aws_iam_user.user_devops_01.name},${aws_iam_user_login_profile.user_devops01.e
 EOT
     filename = "${path.module}/user_devops_01.csv"
 }
+

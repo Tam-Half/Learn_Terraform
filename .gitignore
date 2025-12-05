@@ -28,3 +28,7 @@ ThamKhaoTerraform
 .terraform.lock.hcl
 
 *.asc
+
+*.exe
+
+aws-auth.yaml
