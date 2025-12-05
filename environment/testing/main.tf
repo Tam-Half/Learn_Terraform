@@ -47,8 +47,8 @@ module "eks_cluster" {
 ######################
 module "ec2_wokers" {
     source = "../../module/ec2"
-    aws_ami_id = "ami-098117ea1bb5141ba"
-    aws_instance_type = "t3.small"
+    aws_ami_id = ""
+    aws_instance_type = ""
     aws_instance_name = "ec2_terraform_test"
     key_name = module.key_pair.key_name
     public_subnet = module.vpc.public_subnet_ids
