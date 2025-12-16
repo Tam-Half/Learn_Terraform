@@ -32,9 +32,9 @@ variable "vpc_id" {
 variable "allowed_ssh_ips" {
     description = "My Ip SSH to EC2"
     type = list(string)
-    #["MY IP"]
+    #["MY IP/32"]
     # curl ifconfig.me
-    default = []
+    default = ["hhahahahaha/32"]
 }
 
 variable "instance_profile" {

@@ -58,3 +58,7 @@ module "ec2_wokers" {
     aws_eks_cluster_endponit = module.eks_cluster.cluster_endpoint
     aws_eks_cluster_auth = module.eks_cluster.kubeconfig_certificate_authority_data
 }
+# After apply
+#Step 1: aws eks update-kubeconfig --region ap-southeast-1 --name master_node
+#Step 2: kubectl get nodes
+#Step 3: kubectl apply -f aws-auth.yaml

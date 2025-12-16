@@ -12,12 +12,12 @@ resource "aws_instance" "node_woker" {
   # add role eks_woker_node
   iam_instance_profile = var.instance_profile
    
-user_data = <<-EOF
-#!/bin/bash
-/etc/eks/bootstrap.sh ${var.aws_eks_cluster} \
+  user_data = <<-EOF
+  #!/bin/bash
+  /etc/eks/bootstrap.sh ${var.aws_eks_cluster} \
   --apiserver-endpoint "${var.aws_eks_cluster_endponit}" \
   --b64-cluster-ca "${var.aws_eks_cluster_auth}"
-EOF
+  EOF
 
   tags = {
     Name = "${var.aws_instance_name}-${count.index}"

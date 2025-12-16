@@ -13,7 +13,7 @@
         availability_zone = var.public_azs[0]
 
         map_public_ip_on_launch = true
-        
+                
         tags = {
             Name = "public-subnet-ap-1a"
         }

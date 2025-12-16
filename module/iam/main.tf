@@ -54,7 +54,7 @@ resource "aws_iam_instance_profile" "eks_woker_node_profile" {
 }
 
 
-# I AM ROLE EKS CLUSTER
+# I AM ROLE EKS MASTER
 ###
 resource "aws_iam_role" "cluster" {
   name = "eks-cluster-demo"
